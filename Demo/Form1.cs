@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Opera;
+using OpenQA.Selenium.Firefox;
 
 namespace Demo
 {
     public partial class Form1 : Form
     {
-
         public Form1()
         {
             InitializeComponent();
@@ -22,18 +22,18 @@ namespace Demo
 
         private void button1_Click(object sender, EventArgs e)
         {
-            IWebDriver browser = new ChromeDriver();
+            IWebDriver browser = new OperaDriver();
             browser.Manage().Window.Maximize();
-            browser.Navigate().GoToUrl("https://www.google.com.ua/");
+            browser.Navigate().GoToUrl("https://www.google.com.ua");
 
-            IWebElement searchinput = browser.FindElement(By.Id("lst-ib"));
+            IWebElement searchinput = browser.FindElement(By.XPath(".//input[@id='lst-ib']"));
             searchinput.SendKeys("как вырастить грибы" + OpenQA.Selenium.Keys.Enter);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            IWebDriver browser = new ChromeDriver();
-            browser.Quit();
+           IWebDriver browser = new OperaDriver();
+           browser.Quit();
         }
     }
 }
