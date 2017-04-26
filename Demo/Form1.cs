@@ -15,6 +15,8 @@ namespace Demo
 {
     public partial class Form1 : Form
     {
+        IWebDriver browser;
+
         public Form1()
         {
             InitializeComponent();
@@ -22,7 +24,7 @@ namespace Demo
 
         private void button1_Click(object sender, EventArgs e)
         {
-            IWebDriver browser = new OperaDriver();
+            browser = new OperaDriver();
             browser.Manage().Window.Maximize();
             browser.Navigate().GoToUrl("https://www.google.com.ua");
 
@@ -32,7 +34,6 @@ namespace Demo
 
         private void button2_Click(object sender, EventArgs e)
         {
-           IWebDriver browser = new OperaDriver();
            browser.Quit();
         }
     }
