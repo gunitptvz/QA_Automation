@@ -6,10 +6,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using System.IO;
 using System.Windows.Forms;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Opera;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Chrome;
 
 namespace Demo
 {
@@ -24,21 +27,26 @@ namespace Demo
 
         private void button1_Click(object sender, EventArgs e)
         {
-            browser.Navigate().GoToUrl("https://www.google.com.ua");
+            browser.Navigate().GoToUrl("https://www.google.com.ua"); // Go to selected URL
 
-            IWebElement searchinput = browser.FindElement(By.XPath(".//input[@id='lst-ib']"));
-            searchinput.SendKeys("как вырастить грибы" + OpenQA.Selenium.Keys.Enter);
+            IWebElement searchinput = browser.FindElement(By.XPath(".//*[@id='lst-ib']")); // Find element by XPath
+            // Thread.Sleep(5000);
+            searchinput.SendKeys("выращиваем грибы дома" + OpenQA.Selenium.Keys.Enter); // Fill search textbox and click Enter
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-           browser.Quit();
+           browser.Quit(); // Quit browser
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            browser = new FirefoxDriver();
-            browser.Manage().Window.Maximize();
+            // Save previous browser settings;
+            FirefoxProfileManager profileoptions = new FirefoxProfileManager();
+            FirefoxProfile profile = profileoptions.GetProfile("1h0nvz5l.default");
+
+            browser = new FirefoxDriver(profile); // Open browser
+            browser.Manage().Window.Maximize(); // Maximize browser window
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -68,17 +76,42 @@ namespace Demo
 
         private void button5_Click(object sender, EventArgs e)
         {
-            // browser.Navigate().GoToUrl("http://yandex.com.ua");
+            browser.Navigate().GoToUrl("http://yandex.com.ua");
 
-            // List<IWebElement> news = browser.FindElements(By.XPath(".//*[@id='tabnews_newsc']//li")).ToList();
+            List<IWebElement> news = browser.FindElements(By.XPath(".//*[@id='tabnews_newsc']//li")).ToList(); // Create list of elements and find it
 
-            // int a = 1;
+            for(int i = 0; i < news.Count; i++)
+            {
+                textBox1.AppendText(((i+1).ToString()) + "." + news[i].Text + "." + "\r\n"); // Show list in the texBox form
+            }
 
-            // for(int i = 0; i < news.Count; i++)
-            // {
-            // textBox1.AppendText((a++) + "." + news[i].Text + "." + "\n");
-            // }
+        }
 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            browser.Navigate().GoToUrl("http://yandex.com.ua");
+
+            List<IWebElement> news = browser.FindElements(By.XPath(".//*[@id='tabnews_newsc']//li")).ToList(); // Create list of elements and find it
+
+            for(int i = 0; i < news.Count; i++)
+            {
+                string s = news[i].Text;
+
+                if(s.StartsWith("ВСУ")) // News begin on
+                {
+                    textBox1.AppendText("Новость №" + (i + 1) + " начинается с текста 'ВСУ'" + "\r\n");
+                }
+                if (s.EndsWith("Дамаска")) // News end of
+                {
+                    textBox1.AppendText("Новость №" + (i + 1) + " заканчивается текстом 'Дамаска'" + "\r\n");
+                }
+                if (s.Contains("россияне")) // News constains word
+                {
+                    textBox1.AppendText("Новость №" + (i + 1) + " содержит текст 'россияне'" + "\r\n");
+                    news[i].Click(); // click on finded news
+                    break; // stop cicle
+                }
+            }
         }
     }
 }

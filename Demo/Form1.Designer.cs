@@ -34,23 +34,25 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(394, 186);
+            this.button1.Location = new System.Drawing.Point(595, 12);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(140, 65);
+            this.button1.Size = new System.Drawing.Size(126, 65);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Open web browser and use Google search";
+            this.button1.Text = "Use Google search";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(555, 307);
+            this.button2.Location = new System.Drawing.Point(463, 12);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(126, 73);
+            this.button2.Size = new System.Drawing.Size(126, 65);
             this.button2.TabIndex = 1;
             this.button2.Text = "Close web browser";
             this.button2.UseVisualStyleBackColor = true;
@@ -58,7 +60,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(555, 71);
+            this.button3.Location = new System.Drawing.Point(331, 12);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(126, 65);
             this.button3.TabIndex = 2;
@@ -68,9 +70,10 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(699, 187);
+            this.button4.Enabled = false;
+            this.button4.Location = new System.Drawing.Point(331, 83);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(138, 64);
+            this.button4.Size = new System.Drawing.Size(126, 64);
             this.button4.TabIndex = 3;
             this.button4.Text = "Find element";
             this.button4.UseVisualStyleBackColor = true;
@@ -88,17 +91,38 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 4);
+            this.textBox1.Location = new System.Drawing.Point(12, 12);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(332, 323);
+            this.textBox1.Size = new System.Drawing.Size(289, 323);
             this.textBox1.TabIndex = 5;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(331, 153);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(126, 64);
+            this.button6.TabIndex = 6;
+            this.button6.Text = "Find text";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(595, 83);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(126, 64);
+            this.button7.TabIndex = 7;
+            this.button7.Text = "Java Script";
+            this.button7.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(849, 455);
+            this.ClientSize = new System.Drawing.Size(840, 455);
+            this.Controls.Add(this.button7);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -121,6 +145,8 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button7;
     }
 }
 
