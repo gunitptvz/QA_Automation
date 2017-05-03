@@ -20,12 +20,34 @@ namespace Demo
     {
         IWebDriver browser;
 
+        private string FindWindow(string url)
+        {
+            string startwindow = browser.CurrentWindowHandle;
+            string result = "";
+
+            for (int i = 0; i < browser.WindowHandles.Count; i++)
+            {
+                if (browser.WindowHandles[i] != startwindow)
+                {
+                    browser.SwitchTo().Window(browser.WindowHandles[i]);
+                    if (browser.Url.Contains(url))
+                    {
+                        result = browser.WindowHandles[i];
+                        break;
+                    }
+                }
+            }
+
+            browser.SwitchTo().Window(startwindow);
+            return result;
+        }
+
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) // Use google search button
         {
             browser.Navigate().GoToUrl("https://www.google.com.ua"); // Go to selected URL
 
@@ -34,22 +56,22 @@ namespace Demo
             searchinput.SendKeys("выращиваем грибы дома" + OpenQA.Selenium.Keys.Enter); // Fill search textbox and click Enter
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) // Close web browser button
         {
            browser.Quit(); // Quit browser
-        }
+        } 
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e) // Open web browser button
         {
             // FirefoxProfileManager manage = new FirefoxProfileManager(); // Download user Firefox profile
             // FirefoxProfile profile = manage.GetProfile("myprofile"); 
 
             browser = new FirefoxDriver(); // Open browser
             browser.Manage().Window.Maximize(); // Maximize browser window
-            browser.Navigate().GoToUrl("https://yandex.ua");
+            // browser.Navigate().GoToUrl("https://yandex.ua");
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e) // Find element button
         {
             // IWebElement element;
 
@@ -74,7 +96,7 @@ namespace Demo
 
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e) // Elements counting button
         {
             browser.Navigate().GoToUrl("http://yandex.com.ua");
 
@@ -87,7 +109,7 @@ namespace Demo
 
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e) // Find text button
         {
             browser.Navigate().GoToUrl("http://yandex.com.ua");
 
@@ -114,13 +136,29 @@ namespace Demo
             }
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void button7_Click(object sender, EventArgs e) // Open JS button
         {
             // IJavaScriptExecutor js = browser as IJavaScriptExecutor;
             // js.ExecuteScript("alert('javascript test')");
 
             IJavaScriptExecutor js = browser as IJavaScriptExecutor;
             js.ExecuteScript(textBox1.Text);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            /* browser.SwitchTo().Window(browser.WindowHandles[1]);
+            MessageBox.Show(browser.Title + "\r\n" + browser.Url);
+
+            browser.SwitchTo().Window(browser.WindowHandles[0]);
+            MessageBox.Show(browser.Title + "\r\n" + browser.Url);
+
+            browser.SwitchTo().Window(browser.WindowHandles[2]);
+            MessageBox.Show(browser.Title + "\r\n" + browser.Url); */
+
+            string habrwindow = FindWindow("habr");
+            browser.SwitchTo().Window(habrwindow);
+            MessageBox.Show(browser.Title + "\r\n" + browser.Url);
         }
     }
 }
