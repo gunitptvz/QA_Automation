@@ -41,12 +41,12 @@ namespace Demo
 
         private void button3_Click(object sender, EventArgs e)
         {
-            // Save previous browser settings;
-            FirefoxProfileManager profileoptions = new FirefoxProfileManager();
-            FirefoxProfile profile = profileoptions.GetProfile("1h0nvz5l.default");
+            // FirefoxProfileManager manage = new FirefoxProfileManager(); // Download user Firefox profile
+            // FirefoxProfile profile = manage.GetProfile("myprofile"); 
 
-            browser = new FirefoxDriver(profile); // Open browser
+            browser = new FirefoxDriver(); // Open browser
             browser.Manage().Window.Maximize(); // Maximize browser window
+            browser.Navigate().GoToUrl("https://yandex.ua");
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -112,6 +112,15 @@ namespace Demo
                     break; // stop cicle
                 }
             }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            // IJavaScriptExecutor js = browser as IJavaScriptExecutor;
+            // js.ExecuteScript("alert('javascript test')");
+
+            IJavaScriptExecutor js = browser as IJavaScriptExecutor;
+            js.ExecuteScript(textBox1.Text);
         }
     }
 }
