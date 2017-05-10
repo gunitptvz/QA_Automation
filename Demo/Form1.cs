@@ -13,6 +13,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Opera;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+// ReSharper disable All
 
 namespace Demo
 {
@@ -63,8 +65,8 @@ namespace Demo
 
         private void button3_Click(object sender, EventArgs e) // Open web browser button
         {
-            // FirefoxProfileManager manage = new FirefoxProfileManager(); // Download user Firefox profile
-            // FirefoxProfile profile = manage.GetProfile("myprofile"); 
+           // FirefoxProfileManager manage = new FirefoxProfileManager(); // Download user Firefox profile
+           // FirefoxProfile profile = manage.GetProfile("myprofile"); 
 
             browser = new FirefoxDriver(); // Open browser
             browser.Manage().Window.Maximize(); // Maximize browser window
@@ -145,9 +147,9 @@ namespace Demo
             js.ExecuteScript(textBox1.Text);
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void button8_Click(object sender, EventArgs e) // Work with tabs
         {
-            /* browser.SwitchTo().Window(browser.WindowHandles[1]);
+            /* browser.SwitchTo().Window(browser.WindowHandles[1]); // Show title and url all opened insets.
             MessageBox.Show(browser.Title + "\r\n" + browser.Url);
 
             browser.SwitchTo().Window(browser.WindowHandles[0]);
@@ -156,9 +158,31 @@ namespace Demo
             browser.SwitchTo().Window(browser.WindowHandles[2]);
             MessageBox.Show(browser.Title + "\r\n" + browser.Url); */
 
-            string habrwindow = FindWindow("habr");
+           /* string habrwindow = FindWindow("habr");
             browser.SwitchTo().Window(habrwindow);
+            MessageBox.Show(browser.Title + "\r\n" + browser.Url); */ // Find inset by part of website link.
+
+            List<string> beforetabs = browser.WindowHandles.ToList();
+            // открываем новую вкладку.
+            List<string> aftertabs = browser.WindowHandles.ToList();
+            // вкладки до минус вкладки после = новая вкладка.
+            List<string> onenewtab = aftertabs.Except(beforetabs).ToList();
+            browser.SwitchTo().Window(onenewtab[0]);
             MessageBox.Show(browser.Title + "\r\n" + browser.Url);
+        }
+
+        private void button9_Click(object sender, EventArgs e) // Thread sleep
+        {
+            browser.Navigate().GoToUrl("http://www.degraeve.com/reference/simple-ajax-example.php");
+
+            IWebElement element = browser.FindElement(By.XPath(".//input[@value = 'Go']"));
+            // Thread.Sleep(5000); // плохой способ.
+            element.Click();
+
+            WebDriverWait wait = new WebDriverWait(browser, TimeSpan.FromSeconds(10));
+            IWebElement txt = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(".//div[@id='result']")));
+
+            textBox1.Text = txt.Text;
         }
     }
 }
