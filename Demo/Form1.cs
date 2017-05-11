@@ -44,6 +44,16 @@ namespace Demo
             return result;
         }
 
+        IWebElement GetElement(By locator)
+        {
+            List<IWebElement> elements = browser.FindElements(locator).ToList();
+            if (elements.Count > 0)
+            {
+                return elements[0];
+            }
+            else return null;
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -66,10 +76,11 @@ namespace Demo
         private void button3_Click(object sender, EventArgs e) // Open web browser button
         {
            // FirefoxProfileManager manage = new FirefoxProfileManager(); // Download user Firefox profile
-           // FirefoxProfile profile = manage.GetProfile("myprofile"); 
+           // FirefoxProfile profile = manage.GetProfile("myprofile");
 
-            browser = new FirefoxDriver(); // Open browser
-            browser.Manage().Window.Maximize(); // Maximize browser window
+        
+         browser = new FirefoxDriver(); // Open browser
+         browser.Manage().Window.Maximize(); // Maximize browser window
             // browser.Navigate().GoToUrl("https://yandex.ua");
         }
 
@@ -183,6 +194,16 @@ namespace Demo
             IWebElement txt = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(".//div[@id='result']")));
 
             textBox1.Text = txt.Text;
+        }
+
+        private void button10_Click(object sender, EventArgs e) // Element existence
+        {
+            browser.Navigate().GoToUrl("https://modnakasta.ua/");
+            IWebElement login = GetElement(By.PartialLinkText("Karta"));
+            if (login != null)
+            {
+                login.Click();
+            }
         }
     }
 }
